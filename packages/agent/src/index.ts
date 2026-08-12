@@ -8,6 +8,8 @@ export type {
 	InferOptionalAttributes,
 	InferRequiredAndOptionalAttributes,
 	InferStartAttributes,
+	RecordedTelemetryEvent,
+	RecordedTelemetrySpan,
 	SchemaTelemetrySpan,
 	SpanAttributes,
 	SpanAttributes as TelemetrySpanAttributes,
@@ -30,8 +32,14 @@ export type {
 	TelemetrySpan,
 	TelemetrySpanDefinition,
 	TelemetryStartAttributeDefinition,
+	TypedSpanStarter,
 } from "@earendil-works/pi-telemetry";
-export { defineTelemetrySchema, NOOP_TELEMETRY_CONTEXT } from "@earendil-works/pi-telemetry";
+export {
+	createTypedSpanStarter,
+	defineTelemetrySchema,
+	InMemoryTelemetryContext,
+	NOOP_TELEMETRY_CONTEXT,
+} from "@earendil-works/pi-telemetry";
 export * from "./agent.ts";
 // Loop functions
 export * from "./agent-loop.ts";
@@ -70,7 +78,6 @@ export * from "./harness/prompt-templates.ts";
 // Harness
 export * from "./harness/result.ts";
 export * from "./harness/session/index.ts";
-export * from "./harness/session/search.ts";
 export * from "./harness/skills.ts";
 export * from "./harness/system-prompt.ts";
 export type {
@@ -92,6 +99,7 @@ export type {
 	HarnessTelemetrySpan,
 } from "./harness/telemetry.ts";
 export {
+	AGENT_TELEMETRY_SCHEMAS,
 	AI_TELEMETRY_SCHEMA,
 	HARNESS_TELEMETRY_SCHEMA,
 	startAiSpan,
@@ -130,6 +138,7 @@ export * from "./harness/utils/shell-output.ts";
 export * from "./harness/utils/truncate.ts";
 // Proxy utilities
 export * from "./proxy.ts";
+export * from "./search/index.ts";
 // Stream defaults
 export { setDefaultStreamFn } from "./stream-fn.ts";
 // Types

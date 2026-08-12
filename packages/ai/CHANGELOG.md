@@ -2,6 +2,27 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Automatically converted supported strict tool schemas to provider-compatible closed objects with required nullable optional fields while preserving original tool definitions, and treated `null` values for optional non-nullable tool arguments as omitted.
+- Changed OpenAI Responses deferred tool loading to prefer message-anchored `additional_tools` where supported while retaining tool-search and top-level fallbacks ([#7709](https://github.com/earendil-works/pi/issues/7709)).
+- Replaced the Mistral SDK transport with a native Chat Completions HTTP stream, eliminating its generated client and schema runtime overhead.
+
+### Fixed
+
+- Fixed GitHub Copilot login triggering API rate limits while enabling model policies by limiting concurrent policy updates ([#6187](https://github.com/earendil-works/pi/issues/6187)).
+- Fixed upstream request buffer limit failures to trigger automatic assistant retries.
+- Fixed OpenAI Responses function and custom tool calls to preserve namespaces during streaming, proxying, and replay ([#7709](https://github.com/earendil-works/pi/issues/7709)).
+- Fixed built-in and custom DeepSeek API models to send output limits through the supported `max_tokens` field.
+
+## [0.84.1] - 2026-08-07
+
+### Added
+
+- Added Qwen Token Plan Individual as a built-in provider with its documented subscription model catalog and the shared international `QWEN_TOKEN_PLAN_API_KEY` ([#7659](https://github.com/earendil-works/pi/pull/7659) by [@arasovic](https://github.com/arasovic)).
+
+## [0.84.0] - 2026-08-06
+
 ### Breaking Changes
 
 - Renamed the exported `ModelsStreamTransforms` interface to `ModelsRequestTransforms` because its header transformation now applies to all authenticated provider requests.
@@ -68,6 +89,7 @@
 
 ### Added
 
+- Added optional `OAuthAuth.isSubscription` metadata for distinguishing subscription-backed authentication from generic OAuth sign-in.
 - Added explicit `TelemetryContext` propagation across stream, deferred, and image request options using the vendor-neutral `@earendil-works/pi-telemetry` contract.
 - Added deferred provider request contracts, durable response handles, authenticated fetch/cancel dispatch, and faux-provider support for pending, ready, failed, and cancelled responses ([#7339](https://github.com/earendil-works/pi/pull/7339) by [@davidbrai](https://github.com/davidbrai)).
 - Added Baseten as a built-in OpenAI-compatible provider with models.dev catalog generation and native `chat_template_args` reasoning controls.
@@ -90,6 +112,7 @@
 - Fixed newer provider refreshes being blocked by or overwritten by an older stalled generation, including persisted catalog publication.
 - Updated GPT-5.6 Terra and Luna pricing across OpenAI and passthrough model catalogs.
 - Fixed Fireworks Kimi K3 models to use the OpenAI-compatible API with native reasoning-effort levels and deferred tools ([#7199](https://github.com/earendil-works/pi/issues/7199), [#7230](https://github.com/earendil-works/pi/pull/7230) by [@XBeg9](https://github.com/XBeg9)).
+- Fixed Fireworks GLM 5.2 models sending the unsupported `prompt_cache_retention` field when long cache retention is enabled, and enabled session affinity for automatic prompt caching ([#7676](https://github.com/earendil-works/pi/issues/7676)).
 - Updated Groq's Qwen reasoning override for the replacement `qwen/qwen3.6-27b` model.
 - Fixed the OpenCode Go provider display name.
 - Fixed provider error normalization treating arrays and class instances as structured response bodies instead of preserving their original errors ([#7205](https://github.com/earendil-works/pi/pull/7205) by [@erikogenvik](https://github.com/erikogenvik)).
